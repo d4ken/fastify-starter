@@ -1,12 +1,9 @@
 'use strict';
-
-
+const index = require('../controllers/index');
 
 module.exports = async function (fastify, opts) {
-  fastify.get('/', async function (request, reply) {
+  fastify.get('/root', async function (request, reply) {
     return { root: true };
   });
-  fastify.get('/liquid', async function (request, reply) {
-    return reply.view("/views/index", { title: "タイトル"});
-  });
+  fastify.get('/', index);
 };

@@ -6,7 +6,7 @@ const POV = require('point-of-view');
 const { Liquid } = require('liquidjs');
 
 const engine = new Liquid({
-  root: path.join(__dirname, 'views'),
+  root: ['views/', 'views/partials/'],
   extname: '.liquid',
 });
 
