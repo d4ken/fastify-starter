@@ -1,5 +1,6 @@
 'use strict';
 
 module.exports = async function (request, reply) {
-  return reply.view('/views/index', { title: 'タイトル' });
+  const todos = ['ぴよこっこー🐥', 'こけこっこー🐔', 'はとぽっぽー🕊']
+  return reply.view('/views/index', { title: 'D4ken Tech' , todos: todos});
 };

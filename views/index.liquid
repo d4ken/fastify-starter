@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ title }}</title>
-</head>
-<body>
-こけこっこー
-</body>
-</html>
+{% layout 'partials/_layout' %}
+
+{% block 'header' %}
+  {% include 'partials/_header' %}
+{% endblock %}
+
+{% block 'section' %}
+    {% include 'partials/_section' %}
+{% endblock %}
+
+<progress id="progress" class="progress is-danger" value="0" max="100">90%</progress>
+<button id="timer" class="button" onclick="stopTimer()">Stop</button>
+
+{% block 'footer' %}
+    {% include 'partials/_footer' %}
+{% endblock %}
