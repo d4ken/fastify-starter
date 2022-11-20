@@ -6,6 +6,11 @@ const AutoLoad = require('@fastify/autoload');
 module.exports = async function (fastify, opts) {
   // Place here your custom code!
 
+  fastify.addHook('preValidation', async (request, reply) => {
+    if(request.routerPath === '/chatApp' && !request.query.username) {
+      reply.code(403).send('Connection rejected');
+    }
+  })
   // Do not touch the following lines
   // This loads all plugins defined in plugins
   // those should be support plugins that are reused
