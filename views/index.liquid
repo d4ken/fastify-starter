@@ -12,5 +12,31 @@
 <button id="timer" class="button" onclick="stopTimer()">Stop</button>
 
 {% block 'footer' %}
-    {% include 'partials/_footer' %}
+<script>
+  let intervalID;
+  let value = 0;
+
+  function stopTimer() {
+    if (!intervalID) {
+      startTimer()
+      document.getElementById("timer").innerText = "Stop";
+    } else {
+      clearInterval(intervalID);
+      intervalID = null;
+      document.getElementById("timer").innerText = "Start";
+    }
+  };
+
+  const startTimer = () => {
+    intervalID = setInterval(() => {
+      value += 1;
+      document.getElementById("progress").setAttribute("value", value.toString());
+      if(value > 100) {
+        value = 0;
+      }
+    }, 100);
+  };
+
+  startTimer()
+</script>
 {% endblock %}
