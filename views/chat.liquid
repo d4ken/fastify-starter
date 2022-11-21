@@ -1,52 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Chat</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="description" content="" />
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
+{% layout 'partials/_layout' %}
 
-        * {
-            box-sizing: border-box;
-            font-family: Arial;
-        }
+{% block 'head' %}
+    <link rel="stylesheet" href="css/chat.css">
+{% endblock %}
 
-        #chat {
-            width: 100vw;
-            height: 100vh;
-            padding: 12px;
-            overflow: hidden scroll;
-        }
-
-        #chat div {
-            padding: 4px 0px;
-        }
-
-        #chat div b {
-            color: #555;
-        }
-
-        input[type=text] {
-            position: fixed;
-            bottom: 10px;
-            left: 12px;
-            outline: none;
-            width: 400px;
-            border: #555 solid 1px;
-            font-size: 14px;
-            padding: 4px;
-        }
-    </style>
-</head>
-<body>
-<h1>チャット</h1>
-<header id="header"></header>
-<div id="stats"></div>
+<span>通信状況: </span>
+<span id="stats"></span>
 <div id="chat"></div>
 <input id="message" type="text" autofocus/>
 
@@ -103,8 +62,6 @@
     return sessionStorage.username;
   }
 
-
-
   function appendMessage(message) {
     document.getElementById('chat').innerHTML +=
       `
@@ -117,5 +74,3 @@
             `
   }
 </script>
-</body>
-</html>
