@@ -4,10 +4,16 @@
     <link rel="stylesheet" href="css/chat.css">
 {% endblock %}
 
+{% block 'header' %}
+{% include 'partials/_header' %}
+{% endblock %}
+
+<div><a id="reconnect"></a></div>
+<button class="button is-info" id="sendButton">送信</button>
 <span>通信状況: </span>
 <span id="stats"></span>
 <div id="chat"></div>
-<input id="message" type="text" autofocus/>
+<input class="input" id="message" type="text" autofocus/>
 
 <script>
   let _ws = null;
@@ -45,8 +51,23 @@
       }));
       event.target.value = '';
       document.getElementById('stats').innerHTML = "Disconnected."
+      let child = document.getElementById('reconnect');
+      child.setAttribute('class', 'button is-info');
+      child.setAttribute('href', location.href);
+      child.innerHTML = '再接続';
     }
 
+    // ボタンでチャット送信
+    let sendButton = document.getElementById('sendButton');
+    sendButton.addEventListener('click', () => {
+      _ws.send(JSON.stringify({
+        message: document.getElementById('message').value,
+        date: new Date().toLocaleString()
+      }));
+      document.getElementById('message').value = '';
+    })
+
+    // Enterキーでチャット送信
     document.addEventListener('keypress', (event) => {
       if(event.key == 'Enter') {
         _ws.send(JSON.stringify({
