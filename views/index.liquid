@@ -8,27 +8,6 @@
     {% include 'partials/_section' %}
 {% endblock %}
 
-<form class="box">
-  <div class="field">
-    <label class="label">Email</label>
-    <div class="control">
-      <input class="input" type="email" placeholder="e.g. alex@example.com">
-    </div>
-  </div>
-
-  <div class="field">
-    <label class="label">Password</label>
-    <div class="control">
-      <input class="input" type="password" placeholder="********">
-    </div>
-  </div>
-
-  <button class="button is-primary">Sign in</button>
-</form>
-
-<progress id="progress" class="progress is-danger" value="0" max="100">90%</progress>
-<button id="timer" class="button" onclick="stopTimer()">Stop</button>
-
 {% block 'footer' %}
 <script>
   let intervalID;
