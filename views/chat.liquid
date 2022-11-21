@@ -66,7 +66,10 @@
       init();
       return;
     }
-    let ws_url = `wss://localhost:3000/chatApp?username=${username}`
+    
+    var pro = "wss:";
+    if (window.location.protocol == "http:") pro = "ws:";
+    let ws_url = pro + "//" + window.location.host + `/chatApp?username=${username}`;
 
     _ws = new WebSocket(ws_url);
 
