@@ -2,7 +2,7 @@
 
 module.exports = async function (fastify, opts) {
   let content = {
-    sender: '管理人',
+    sender: '__server',
     date: `[${new Date().toLocaleString()}]`,
     message: ''
   }
