@@ -69,7 +69,7 @@
     
     var pro = "wss:";
     if (window.location.protocol == "http:") pro = "ws:";
-    let ws_url = pro + "//" + window.location.host + `/chatApp?username=${username}`;
+    let ws_url = `${pro}//localhost:${window.location.port}/chatApp?username=${username}`;
 
     _ws = new WebSocket(ws_url);
 
