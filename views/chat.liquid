@@ -1,54 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Chat</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <meta name="description" content="" />
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-        }
+{% layout 'partials/_layout' %}
 
-        * {
-            box-sizing: border-box;
-            font-family: Arial;
-        }
+{% block 'head' %}
+    <link rel="stylesheet" href="css/chat.css">
+{% endblock %}
 
-        #chat {
-            width: 100vw;
-            height: 100vh;
-            padding: 12px;
-            overflow: hidden scroll;
-        }
+{% block 'header' %}
+{% include 'partials/_header' %}
+{% endblock %}
 
-        #chat div {
-            padding: 4px 0px;
-        }
-
-        #chat div b {
-            color: #555;
-        }
-
-        input[type=text] {
-            position: fixed;
-            bottom: 10px;
-            left: 12px;
-            outline: none;
-            width: 400px;
-            border: #555 solid 1px;
-            font-size: 14px;
-            padding: 4px;
-        }
-    </style>
-</head>
-<body>
-<h1>チャット</h1>
-<header id="header"></header>
-<div id="stats"></div>
+<div><a id="reconnect"></a></div>
+<button class="button is-info" id="sendButton">送信</button>
+<span>通信状況: </span>
+<span id="stats"></span>
 <div id="chat"></div>
-<input id="message" type="text" autofocus/>
+<input class="input" id="message" type="text" autofocus/>
 
 <script>
   let _ws = null;
@@ -66,10 +31,12 @@
       init();
       return;
     }
-    
+
+   
     var pro = "wss:";
     if (window.location.protocol == "http:") pro = "ws:";
     let ws_url = `${pro}//localhost:${window.location.port}/chatApp?username=${username}`;
+
 
     _ws = new WebSocket(ws_url);
 
@@ -89,8 +56,23 @@
       }));
       event.target.value = '';
       document.getElementById('stats').innerHTML = "Disconnected."
+      let child = document.getElementById('reconnect');
+      child.setAttribute('class', 'button is-info');
+      child.setAttribute('href', location.href);
+      child.innerHTML = '再接続';
     }
 
+    // ボタンでチャット送信
+    let sendButton = document.getElementById('sendButton');
+    sendButton.addEventListener('click', () => {
+      _ws.send(JSON.stringify({
+        message: document.getElementById('message').value,
+        date: new Date().toLocaleString()
+      }));
+      document.getElementById('message').value = '';
+    })
+
+    // Enterキーでチャット送信
     document.addEventListener('keypress', (event) => {
       if(event.key == 'Enter') {
         _ws.send(JSON.stringify({
@@ -106,8 +88,6 @@
     return sessionStorage.username;
   }
 
-
-
   function appendMessage(message) {
     document.getElementById('chat').innerHTML +=
       `
@@ -120,5 +100,3 @@
             `
   }
 </script>
-</body>
-</html>

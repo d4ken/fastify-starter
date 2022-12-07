@@ -3,26 +3,26 @@
 module.exports = async function (fastify, opts) {
   let content = {
     sender: '__server',
-    date: new Date().toLocaleString(),
+    date: `[${new Date().toLocaleString()}]`,
     message: ''
   }
 
   fastify.get('/',{websocket: true}, async (connection, req) => {
-    content.message = `${req.query.username} joined`
+    content.message = `${req.query.username}さんが入室しました。`
     broadcast(content);
 
     // Leaving user
     connection.socket.on('close', () => {
-      content.message = `${req.query.username} left`
+      content.message = `${req.query.username}さんが退室しました。`
       broadcast(content);
     });
 
     // Broadcast incoming message
-    connection.socket.on('message', (message) => {
-      message = JSON.parse(message.toString());
+    connection.socket.on('message', (cli_received) => {
+      cli_received = JSON.parse(cli_received.toString());
       content.sender = req.query.username;
-      content.date = message.date;
-      content.message = message.message;
+      content.date = `[${new Date().toLocaleString()}]`;
+      content.message = cli_received.message;
       broadcast(content);
     });
   })
